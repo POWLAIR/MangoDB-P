@@ -12,6 +12,8 @@
     "query:prod": "NODE_ENV=production node src/queryDatabase.js",
     "update": "node src/updateDatabase.js",
     "update:prod": "NODE_ENV=production node src/updateDatabase.js",
+    "references": "node src/addReferences.js",
+    "references:prod": "NODE_ENV=production node src/addReferences.js",
     "healthcheck": "node src/healthcheck.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
