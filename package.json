@@ -10,6 +10,8 @@
     "populate:prod": "NODE_ENV=production node src/populateDatabase.js",
     "query": "node src/queryDatabase.js",
     "query:prod": "NODE_ENV=production node src/queryDatabase.js",
+    "update": "node src/updateDatabase.js",
+    "update:prod": "NODE_ENV=production node src/updateDatabase.js",
     "healthcheck": "node src/healthcheck.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
