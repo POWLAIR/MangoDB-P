@@ -14,8 +14,12 @@
     "update:prod": "NODE_ENV=production node src/updateDatabase.js",
     "references": "node src/addReferences.js",
     "references:prod": "NODE_ENV=production node src/addReferences.js",
+    "test:connection": "node src/testConnection.js",
+    "test:connection:prod": "NODE_ENV=production node src/testConnection.js",
     "healthcheck": "node src/healthcheck.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "docker-compose up -d mongodb && npm run setup:local && npm run populate && npm run references",
+    "start:prod": "npm run setup:atlas && npm run populate:prod && npm run references:prod",
+    "test": "npm run test:connection"
   },
   "keywords": ["mongodb", "atlas", "database", "setup", "docker"],
   "author": "",
