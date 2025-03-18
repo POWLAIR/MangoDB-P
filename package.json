@@ -1,0 +1,19 @@
+{
+  "name": "mangodb-p",
+  "version": "1.0.0",
+  "description": "MongoDB Atlas setup and configuration project with Docker support",
+  "main": "src/setupAtlasDatabase.js",
+  "scripts": {
+    "setup:local": "node src/setupDatabase.js",
+    "setup:atlas": "node src/setupAtlasDatabase.js",
+    "healthcheck": "node src/healthcheck.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["mongodb", "atlas", "database", "setup", "docker"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "mongodb": "^6.14.2"
+  }
+}
