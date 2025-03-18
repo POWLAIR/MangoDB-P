@@ -24,6 +24,18 @@ services:
       mongodb:
         condition: service_healthy
 
+  mongodb-query:
+    build: .
+    container_name: mongodb-query
+    command: npm run query
+    env_file: .env
+    networks:
+      - mongodb-network
+    restart: "no"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
   # Service MongoDB local pour les tests
   mongodb:
     image: mongo:latest
