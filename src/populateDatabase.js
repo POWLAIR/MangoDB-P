@@ -14,7 +14,7 @@ async function populateDatabase() {
 
     try {
         await client.connect();
-        console.log("✅ Connexion à MongoDB établie");
+        console.log("Connexion à MongoDB établie");
 
         const db = client.db(dbName);
 
@@ -88,40 +88,40 @@ async function populateDatabase() {
         // Suppression des données existantes
         await db.collection("collectionA").deleteMany({});
         await db.collection("collectionB").deleteMany({});
-        console.log("🗑️ Anciennes données supprimées");
+        console.log("Anciennes données supprimées");
 
         // Insertion des nouvelles données
         const resultA = await db.collection("collectionA").insertMany(dataA);
-        console.log(`✅ ${resultA.insertedCount} documents insérés dans collectionA`);
+        console.log(`${resultA.insertedCount} documents insérés dans collectionA`);
 
         const resultB = await db.collection("collectionB").insertMany(dataB);
-        console.log(`✅ ${resultB.insertedCount} documents insérés dans collectionB`);
+        console.log(`${resultB.insertedCount} documents insérés dans collectionB`);
 
         // Vérification des données insérées
         const countA = await db.collection("collectionA").countDocuments();
         const countB = await db.collection("collectionB").countDocuments();
         
-        console.log("\n📊 Résumé des collections :");
+        console.log("\nRésumé des collections :");
         console.log(`CollectionA : ${countA} documents`);
         console.log(`CollectionB : ${countB} documents`);
 
         return true;
     } catch (error) {
-        console.error("❌ Erreur lors de l'insertion des données:", error);
+        console.error("Erreur lors de l'insertion des données:", error);
         throw error;
     } finally {
         await client.close();
-        console.log("\n🔌 Connexion fermée");
+        console.log("\nConnexion fermée");
     }
 }
 
 // Exécution du script
 populateDatabase()
     .then(() => {
-        console.log("✨ Population de la base de données terminée avec succès");
+        console.log("Population de la base de données terminée avec succès");
         process.exit(0);
     })
     .catch(error => {
-        console.error("❌ Erreur fatale:", error);
+        console.error("Erreur fatale:", error);
         process.exit(1);
     }); 

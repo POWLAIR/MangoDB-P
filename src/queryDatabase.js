@@ -14,19 +14,19 @@ async function findQueries() {
     
     try {
         await client.connect();
-        console.log("✅ Connexion à MongoDB établie");
+        console.log("Connexion à MongoDB établie");
 
         const db = client.db(dbName);
 
-        console.log("\n🔍 Exécution des requêtes...\n");
+        console.log("\nExécution des requêtes...\n");
 
         // 1. Récupérer un document par nom
-        console.log("1️⃣ Recherche par nom (Alice):");
+        console.log("Recherche par nom (Alice):");
         const documentByName = await db.collection("collectionA").findOne({ name: "Alice" });
         console.log(JSON.stringify(documentByName, null, 2));
 
         // 2. Trier selon l'âge (ascendant) et la ville (descendant)
-        console.log("\n2️⃣ Documents triés par âge (↑) et ville (↓):");
+        console.log("\nDocuments triés par âge (↑) et ville (↓):");
         const sortedDocs = await db.collection("collectionA")
             .find()
             .sort({ age: 1, city: -1 })
@@ -34,14 +34,14 @@ async function findQueries() {
         console.log(JSON.stringify(sortedDocs, null, 2));
 
         // 3. Filtrer les personnes de plus de 25 ans
-        console.log("\n3️⃣ Personnes de plus de 25 ans:");
+        console.log("\nPersonnes de plus de 25 ans:");
         const greaterThanDocs = await db.collection("collectionA")
             .find({ age: { $gt: 25 } })
             .toArray();
         console.log(JSON.stringify(greaterThanDocs, null, 2));
 
         // 4. Filtrer avec $and (plus de 20 ans ET habite Paris)
-        console.log("\n4️⃣ Personnes de plus de 20 ans habitant Paris:");
+        console.log("\nPersonnes de plus de 20 ans habitant Paris:");
         const andFilterDocs = await db.collection("collectionA")
             .find({
                 $and: [
@@ -53,7 +53,7 @@ async function findQueries() {
         console.log(JSON.stringify(andFilterDocs, null, 2));
 
         // 5. Filtrer avec $regex (noms commençant par 'A')
-        console.log("\n5️⃣ Personnes dont le nom commence par 'A':");
+        console.log("\nPersonnes dont le nom commence par 'A':");
         const regexDocs = await db.collection("collectionA")
             .find({
                 name: { $regex: "^A", $options: "i" }
@@ -62,7 +62,7 @@ async function findQueries() {
         console.log(JSON.stringify(regexDocs, null, 2));
 
         // 6. Requêtes avancées sur collectionB
-        console.log("\n6️⃣ Développeurs avec plus de 3 ans d'expérience:");
+        console.log("\nDéveloppeurs avec plus de 3 ans d'expérience:");
         const experiencedDevs = await db.collection("collectionB")
             .find({
                 $and: [
@@ -74,7 +74,7 @@ async function findQueries() {
         console.log(JSON.stringify(experiencedDevs, null, 2));
 
         // 7. Agrégation : Moyenne d'âge par ville
-        console.log("\n7️⃣ Moyenne d'âge par ville:");
+        console.log("\nMoyenne d'âge par ville:");
         const avgAgeByCity = await db.collection("collectionA")
             .aggregate([
                 {
@@ -92,7 +92,7 @@ async function findQueries() {
         console.log(JSON.stringify(avgAgeByCity, null, 2));
 
         // 8. Recherche avec projection (seulement nom et ville)
-        console.log("\n8️⃣ Noms et villes uniquement:");
+        console.log("\nNoms et villes uniquement:");
         const projectedDocs = await db.collection("collectionA")
             .find({})
             .project({ name: 1, city: 1, _id: 0 })
@@ -100,7 +100,7 @@ async function findQueries() {
         console.log(JSON.stringify(projectedDocs, null, 2));
 
         // 9. Requête avec $in (recherche multiple)
-        console.log("\n9️⃣ Personnes habitant à Paris ou Lyon:");
+        console.log("\nPersonnes habitant à Paris ou Lyon:");
         const citiesFilter = await db.collection("collectionA")
             .find({
                 city: { $in: ["Paris", "Lyon"] }
@@ -109,7 +109,7 @@ async function findQueries() {
         console.log(JSON.stringify(citiesFilter, null, 2));
 
         // 10. Statistiques sur les collections
-        console.log("\n🔟 Statistiques des collections:");
+        console.log("\nStatistiques des collections:");
         const statsA = await db.collection("collectionA").stats();
         const statsB = await db.collection("collectionB").stats();
         console.log("CollectionA:", {
@@ -125,21 +125,21 @@ async function findQueries() {
 
         return true;
     } catch (error) {
-        console.error("❌ Erreur lors de l'exécution des requêtes:", error);
+        console.error("Erreur lors de l'exécution des requêtes:", error);
         throw error;
     } finally {
         await client.close();
-        console.log("\n🔌 Connexion fermée");
+        console.log("\nConnexion fermée");
     }
 }
 
 // Exécution du script
 findQueries()
     .then(() => {
-        console.log("✨ Requêtes exécutées avec succès");
+        console.log("Requêtes exécutées avec succès");
         process.exit(0);
     })
     .catch(error => {
-        console.error("❌ Erreur fatale:", error);
+        console.error("Erreur fatale:", error);
         process.exit(1);
     }); 

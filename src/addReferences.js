@@ -14,14 +14,14 @@ async function addReferences() {
 
     try {
         await client.connect();
-        console.log("✅ Connexion à MongoDB établie");
+        console.log("Connexion à MongoDB établie");
 
         const db = client.db(dbName);
 
-        console.log("\n🔄 Création et liaison des références...\n");
+        console.log("\nCréation et liaison des références...\n");
 
         // 1. Création de la collection des propriétés (collectionC)
-        console.log("1️⃣ Création de la collection des propriétés:");
+        console.log("Création de la collection des propriétés:");
         
         const properties = [
             {
@@ -65,10 +65,10 @@ async function addReferences() {
         ];
 
         await db.collection("collectionC").insertMany(properties);
-        console.log(`✅ ${properties.length} propriétés ajoutées`);
+        console.log(`${properties.length} propriétés ajoutées`);
 
         // 2. Mise à jour des références dans collectionA
-        console.log("\n2️⃣ Mise à jour des références dans collectionA:");
+        console.log("\nMise à jour des références dans collectionA:");
         
         // Attribution aléatoire des propriétés aux utilisateurs
         const users = await db.collection("collectionA").find({}).toArray();
@@ -91,11 +91,11 @@ async function addReferences() {
                     }
                 }
             );
-            console.log(`✅ Propriété attribuée à ${user.name}`);
+            console.log(`Propriété attribuée à ${user.name}`);
         }
 
         // 3. Création d'une collection de transactions
-        console.log("\n3️⃣ Création de la collection des transactions:");
+        console.log("\nCréation de la collection des transactions:");
         
         const transactions = users.map(user => ({
             _id: new ObjectId(),
@@ -108,10 +108,10 @@ async function addReferences() {
         }));
 
         await db.collection("transactions").insertMany(transactions);
-        console.log(`✅ ${transactions.length} transactions créées`);
+        console.log(`${transactions.length} transactions créées`);
 
         // 4. Agrégation pour vérifier les références
-        console.log("\n4️⃣ Vérification des références:");
+        console.log("\nVérification des références:");
         
         const propertyAggregation = await db.collection("collectionA")
             .aggregate([
@@ -142,11 +142,11 @@ async function addReferences() {
                 }
             ]).toArray();
 
-        console.log("\n📊 Résumé des références:");
+        console.log("\nRésumé des références:");
         console.log(JSON.stringify(propertyAggregation, null, 2));
 
         // 5. Statistiques finales
-        console.log("\n5️⃣ Statistiques des collections:");
+        console.log("\nStatistiques des collections:");
         const stats = {
             users: await db.collection("collectionA").countDocuments(),
             properties: await db.collection("collectionC").countDocuments(),
@@ -160,21 +160,21 @@ async function addReferences() {
 
         return true;
     } catch (error) {
-        console.error("❌ Erreur lors de la création des références:", error);
+        console.error("Erreur lors de la création des références:", error);
         throw error;
     } finally {
         await client.close();
-        console.log("\n🔌 Connexion fermée");
+        console.log("\nConnexion fermée");
     }
 }
 
 // Exécution du script
 addReferences()
     .then(() => {
-        console.log("✨ Références créées avec succès");
+        console.log("Références créées avec succès");
         process.exit(0);
     })
     .catch(error => {
-        console.error("❌ Erreur fatale:", error);
+        console.error("Erreur fatale:", error);
         process.exit(1);
     }); 

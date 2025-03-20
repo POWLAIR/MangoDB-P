@@ -14,14 +14,14 @@ async function updateQueries() {
 
     try {
         await client.connect();
-        console.log("✅ Connexion à MongoDB établie");
+        console.log("Connexion à MongoDB établie");
 
         const db = client.db(dbName);
 
-        console.log("\n🔄 Exécution des mises à jour...\n");
+        console.log("\nExécution des mises à jour...\n");
 
         // 1. Modifier une valeur spécifique avec vérification avant/après
-        console.log("1️⃣ Mise à jour de l'âge d'Alice:");
+        console.log("Mise à jour de l'âge d'Alice:");
         const beforeAlice = await db.collection("collectionA").findOne({ name: "Alice" });
         console.log("Avant:", beforeAlice);
 
@@ -36,7 +36,7 @@ async function updateQueries() {
         console.log(`Modification effectuée: ${updateAlice.modifiedCount} document(s)`);
 
         // 2. Incrémenter l'âge de tous les utilisateurs
-        console.log("\n2️⃣ Incrémentation de l'âge de tous les utilisateurs:");
+        console.log("\nIncrémentation de l'âge de tous les utilisateurs:");
         const beforeIncrement = await db.collection("collectionA")
             .find({}, { projection: { name: 1, age: 1 } })
             .toArray();
@@ -58,7 +58,7 @@ async function updateQueries() {
         console.log(`Documents modifiés: ${incrementAge.modifiedCount}`);
 
         // 3. Ajouter un projet avec timestamp
-        console.log("\n3️⃣ Ajout d'un nouveau projet pour Jean:");
+        console.log("\nAjout d'un nouveau projet pour Jean:");
         const newProject = {
             name: "New App",
             duration: "12 mois",
@@ -82,7 +82,7 @@ async function updateQueries() {
         console.log(`Modification effectuée: ${updateProjects.modifiedCount} document(s)`);
 
         // 4. Supprimer un champ avec sauvegarde
-        console.log("\n4️⃣ Suppression du champ 'city' avec sauvegarde:");
+        console.log("\nSuppression du champ 'city' avec sauvegarde:");
         const citiesBackup = await db.collection("collectionA")
             .find({}, { projection: { name: 1, city: 1 } })
             .toArray();
@@ -99,7 +99,7 @@ async function updateQueries() {
         console.log(`Champ 'city' supprimé dans ${removeCity.modifiedCount} document(s)`);
 
         // 5. Mise à jour conditionnelle avec $set et $min
-        console.log("\n5️⃣ Mise à jour conditionnelle des âges:");
+        console.log("\nMise à jour conditionnelle des âges:");
         const conditionalUpdate = await db.collection("collectionA")
             .updateMany(
                 { age: { $gt: 25 } },
@@ -114,7 +114,7 @@ async function updateQueries() {
         console.log(`Documents mis à jour: ${conditionalUpdate.modifiedCount}`);
 
         // 6. Ajouter des compétences uniques
-        console.log("\n6️⃣ Ajout de compétences uniques:");
+        console.log("\nAjout de compétences uniques:");
         const updateSkills = await db.collection("collectionB")
             .updateMany(
                 {},
@@ -130,7 +130,7 @@ async function updateQueries() {
         console.log(`Compétences ajoutées dans ${updateSkills.modifiedCount} document(s)`);
 
         // 7. Statistiques finales
-        console.log("\n7️⃣ Statistiques des modifications:");
+        console.log("\nStatistiques des modifications:");
         const stats = {
             totalDocumentsA: await db.collection("collectionA").countDocuments(),
             totalDocumentsB: await db.collection("collectionB").countDocuments(),
@@ -143,21 +143,21 @@ async function updateQueries() {
 
         return true;
     } catch (error) {
-        console.error("❌ Erreur lors des mises à jour:", error);
+        console.error("Erreur lors des mises à jour:", error);
         throw error;
     } finally {
         await client.close();
-        console.log("\n🔌 Connexion fermée");
+        console.log("\nConnexion fermée");
     }
 }
 
 // Exécution du script
 updateQueries()
     .then(() => {
-        console.log("✨ Mises à jour effectuées avec succès");
+        console.log("Mises à jour effectuées avec succès");
         process.exit(0);
     })
     .catch(error => {
-        console.error("❌ Erreur fatale:", error);
+        console.error("Erreur fatale:", error);
         process.exit(1);
     }); 
