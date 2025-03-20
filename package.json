@@ -19,9 +19,19 @@
     "healthcheck": "node src/healthcheck.js",
     "start": "docker-compose up -d mongodb && npm run setup:local && npm run populate && npm run references",
     "start:prod": "npm run setup:atlas && npm run populate:prod && npm run references:prod",
-    "test": "npm run test:connection"
+    "test": "npm run test:connection",
+    "dump": "node src/dumpDatabase.js",
+    "dump:prod": "NODE_ENV=production node src/dumpDatabase.js",
+    "update-with-dump": "npm run dump && npm run update",
+    "update-with-dump:prod": "npm run dump:prod && npm run update:prod"
   },
-  "keywords": ["mongodb", "atlas", "database", "setup", "docker"],
+  "keywords": [
+    "mongodb",
+    "atlas",
+    "database",
+    "setup",
+    "docker"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
